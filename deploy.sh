@@ -20,6 +20,9 @@
 
     export JAVA_OPTS="$JAVA_OPTS -Dsamza.log.dir=$PRJ_ROOT/logs"
     $PRJ_ROOT/tmp/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PRJ_ROOT/tmp/config/sl-splittask.properties
+    
+    $PRJ_ROOT/tmp/bin/run-job.sh --config-factory=org.apache.samza.config.factories.PropertiesConfigFactory --config-path=file://$PRJ_ROOT/tmp/config/sl-wordcount.properties
+       
     read -n 1 -s -r -p "Press any key to continue"
     echo -e "\n"
 
@@ -28,6 +31,8 @@
     $KF_DIR/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic sl-lines --from-beginning
 
     $KF_DIR/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic sl-words --from-beginning
+
+    $KF_DIR/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic sl-wordtotals --from-beginning
 
 
     cd $PRJ_ROOT/tmp/ && $PRJ_ROOT/tmp/bin/run-class.sh uk.co.scottlogic.wordcount.ReadFile /usr/lib/jvm/java-8-openjdk-amd64/docs/copyright && cd $PRJ_ROOT
