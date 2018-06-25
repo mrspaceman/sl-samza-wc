@@ -12,7 +12,10 @@ cp ./yarn-site.xml $HOME/.samza/conf/
 cp ./yarn-site.xml $YN_DIR/etc/hadoop/
 
 echo -e "Starting Yarn ..."
-$YN_DIR/sbin/yarn-daemon.sh start resourcemanager
-$YN_DIR/sbin/yarn-daemon.sh start nodemanager
+# $YN_DIR/sbin/yarn-daemon.sh start resourcemanager
+# $YN_DIR/sbin/yarn-daemon.sh start nodemanager
+
+$YN_DIR/bin/yarn --daemon start resourcemanager
+$YN_DIR/bin/yarn --daemon start nodemanager
 
 

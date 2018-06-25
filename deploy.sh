@@ -5,6 +5,7 @@
     mvn dependency:sources
 
 
+    rm -rf $PRJ_ROOT/logs/*
     rm -rf $PRJ_ROOT/tmp/*
     mvn clean package
 
@@ -29,6 +30,6 @@
     $KF_DIR/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic sl-words --from-beginning
 
 
-    cd $PRJ_ROOT/tmp/ && $PRJ_ROOT/tmp/bin/run-class.sh uk.co.scottlogic.wordcount.ReadFile $PRJ_ROOT/pom.xml && cd $PRJ_ROOT
+    cd $PRJ_ROOT/tmp/ && $PRJ_ROOT/tmp/bin/run-class.sh uk.co.scottlogic.wordcount.ReadFile /usr/lib/jvm/java-8-openjdk-amd64/docs/copyright && cd $PRJ_ROOT
 
 

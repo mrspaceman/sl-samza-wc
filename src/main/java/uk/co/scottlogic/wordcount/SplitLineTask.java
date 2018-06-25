@@ -20,14 +20,18 @@
 package uk.co.scottlogic.wordcount;
 
 import org.apache.samza.config.Config;
-import org.apache.samza.task.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.samza.system.IncomingMessageEnvelope;
 import org.apache.samza.system.OutgoingMessageEnvelope;
 import org.apache.samza.system.SystemStream;
+import org.apache.samza.task.InitableTask;
+import org.apache.samza.task.MessageCollector;
+import org.apache.samza.task.StreamTask;
+import org.apache.samza.task.TaskContext;
+import org.apache.samza.task.TaskCoordinator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class SplitLineTask implements StreamTask, InitableTask, WindowableTask{
+public class SplitLineTask implements StreamTask, InitableTask {
     private static final Logger log = LoggerFactory.getLogger(SplitLineTask.class);
     private static final SystemStream OUTPUT_STREAM = new SystemStream("kafka", "sl-words");
 
@@ -48,12 +52,12 @@ public class SplitLineTask implements StreamTask, InitableTask, WindowableTask{
         String[] words = message.split("\\s+"); // split line on one or more whitespace
         for (String word : words) {
             log.info("emitting word : {}", word);
-            collector.send(new OutgoingMessageEnvelope(OUTPUT_STREAM, word, word));
+            try {
+                collector.send(new OutgoingMessageEnvelope(OUTPUT_STREAM, word, word));
+            } catch (Exception e) {
+                log.info("Exception sending msg : {}", e.getMessage());
+            }
         }
     }
 
-    @Override
-    public void window(MessageCollector messageCollector, TaskCoordinator taskCoordinator) throws Exception {
-        log.info("SplitLineTask window()");
-    }
 }
