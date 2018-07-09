@@ -66,7 +66,7 @@ public class ReadFile {
                 try {
                     //  log.info("sending line [{}]", line);
                     RecordMetadata metadata = producer.send(new ProducerRecord<>(TOPIC, index++, line.trim())).get();
-                    Thread.sleep(500);
+                //    Thread.sleep(500);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

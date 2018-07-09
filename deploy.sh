@@ -13,6 +13,7 @@
     echo -e "\n"
 
     mkdir -p $PRJ_ROOT/logs
+    mkdir -p $PRJ_ROOT/tmp
     tar xvf $PRJ_ROOT/target/wc-samza-1.0-SNAPSHOT-dist.tar.gz -C $PRJ_ROOT/tmp/
 
     read -n 1 -s -r -p "Press any key to continue"
